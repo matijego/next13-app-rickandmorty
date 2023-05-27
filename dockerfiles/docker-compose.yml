@@ -1,0 +1,12 @@
+version: '3'
+
+services:
+  rickandmorty-app:
+    image: ram-app
+    build: .
+    ports:
+      - 9000:3000
+    volumes:
+      - ..src/src/:/app/src
+   
+    restart: always
