@@ -1,0 +1,13 @@
+version: '3'
+
+services:
+  rickandmorty-app-prod:
+    container_name: rickandmorty-next13-app-prod
+    image: ram-app-prod
+    build: 
+      context: ../
+      dockerfile: dockerfiles/Dockerfile-prod
+    ports:
+      - 8000:3000
+
+    restart: always

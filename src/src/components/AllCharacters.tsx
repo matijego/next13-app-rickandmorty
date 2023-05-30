@@ -92,7 +92,7 @@ export function AllCharacters() {
             <div className="flex justify-content-center col-12 lg:col-3" key={'character-' + index}>
                 <Card className="w-10 flex justify-content-center fadein cursor-pointer border-1 border-green-500" key={'character-' + index}>
                 <Link href={'/character/' + item.id} className="no-underline">
-                    <img height={200} src={item.image} className="border-circle border-3 border-cyan-600" />
+                    <img height={200} src={item.image} alt="loading..." className="border-circle border-3 border-cyan-600" />
                     <div className="text-center mt-4 text-xl text-800 text-cyan-300 font-semibold">{item.name}</div>
                 </Link>
                 </Card>

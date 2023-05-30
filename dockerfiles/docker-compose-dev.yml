@@ -1,0 +1,19 @@
+version: '3'
+
+services:
+  rickandmorty-app-dev:
+    container_name: rickandmorty-next13-app-dev
+    image: ram-app-dev
+    build: 
+      context: ../
+      dockerfile: dockerfiles/Dockerfile-dev
+    ports:
+      - 9000:3000
+    volumes:
+      - ../src/src/:/app/src/
+      - ../src/package.json:/app/package.json
+      - ../src/public/:/app/public/
+      - ../src/next.config.js:/app/next.config.js
+
+
+    restart: always
