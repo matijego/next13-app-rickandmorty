@@ -1,4 +1,4 @@
-name: My Workflow
+name: SSH Login
 
 on:
   push:
@@ -6,9 +6,21 @@ on:
       - main
 
 jobs:
-  my-job:
+  ssh-login:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Show Variable
-        run: echo secrets.SERVER_IP
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up SSH
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+        run: |
+          mkdir -p ~/.ssh
+          echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H <IP_DEL_SERVIDOR> >> ~/.ssh/known_hosts
+
+      - name: SSH Login
+        run: ssh -i ~/.ssh/id_rsa <USUARIO>@<IP_DEL_SERVIDOR> "comando_a_ejecutar"
