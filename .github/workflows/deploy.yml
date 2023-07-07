@@ -20,7 +20,12 @@ jobs:
           mkdir -p ~/.ssh
           echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
-          ssh-keyscan -H <IP_DEL_SERVIDOR> >> ~/.ssh/known_hosts
+          ssh-keyscan -H 190.220.47.69 >> ~/.ssh/known_hosts
 
       - name: SSH Login
-        run: ssh -i ~/.ssh/id_rsa <USUARIO>@<IP_DEL_SERVIDOR> "comando_a_ejecutar"
+        run: ssh -i ~/.ssh/id_rsa pi@190.220.47.69 "comando_a_ejecutar"
+        
+      - name: Comandos
+        run: |
+          echo "This is an additional command"
+          touch holadesdegit.txt
