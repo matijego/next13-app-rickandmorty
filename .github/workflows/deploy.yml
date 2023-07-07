@@ -16,9 +16,11 @@ jobs:
       - name: Set up SSH
         run: |
           mkdir -p ~/.ssh
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > key.pem
+          echo $SSH_PRIVATE_KEY > key.pem
           chmod 600 key.pem
           ssh-keyscan -H 190.220.47.69 >> ~/.ssh/known_hosts
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
 
       - name: SSH Login
         run: |
