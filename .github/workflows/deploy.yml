@@ -23,7 +23,7 @@ jobs:
           ssh-keyscan -H 190.220.47.69 >> ~/.ssh/known_hosts
 
       - name: SSH Login
-        run: ssh -i ~/.ssh/id_rsa pi@190.220.47.69 "comando_a_ejecutar"
+        run: ssh -i ~/.ssh/id_rsa pi@190.220.47.69
         
       - name: Comandos
         run: |
