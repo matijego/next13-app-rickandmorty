@@ -18,9 +18,9 @@ jobs:
         env:
           WELCOME: "ssh pipeline"
         with:
-          host: 190.220.47.69
-          user: pi
-          pass: X827i&oJWpqxR7Bv
+          host: 1
+          user: 1
+          pass: 1
             
       - name: comandos
         run:
