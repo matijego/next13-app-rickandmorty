@@ -11,19 +11,20 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: cross-the-world/ssh-pipeline@master
 
-      - name: Set up SSH
-        run: |
-          echo "HOLAAAAAAAAAAAAAAAAAAA"
-          echo "SSH_PRIVATE_KEY: $SSH_PRIVATE_KEY"
-          mkdir -p ~/.ssh
-          echo $SSH_PRIVATE_KEY > key.pem
-          chmod 600 key.pem
-          ssh-keyscan -H 190.220.47.69 >> ~/.ssh/known_hosts
+      - name: ssh pipelines
+        uses: cross-the-world/ssh-pipeline@master
         env:
-          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-
-      - name: SSH Login
-        run: |
-          ssh -i key.pem pi@190.220.47.69
+          WELCOME: "ssh pipeline"
+        with:
+          host: 190.220.47.69
+          user: pi
+          pass: X827i&oJWpqxR7Bv
+          connect_timeout: 10s
+          script: |
+            (rm -rf /home/github/test || true)
+            ls -la  
+            echo $WELCOME 
+            mkdir -p /home/github/test/test1 && 
+            mkdir -p /home/github/test/test2 &&
