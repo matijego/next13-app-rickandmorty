@@ -15,6 +15,7 @@ jobs:
 
       - name: Set up SSH
         run: |
+          echo "HOLAAAAAAAAAAAAAAAAAAA"
           echo "SSH_PRIVATE_KEY: $SSH_PRIVATE_KEY"
           mkdir -p ~/.ssh
           echo $SSH_PRIVATE_KEY > key.pem
