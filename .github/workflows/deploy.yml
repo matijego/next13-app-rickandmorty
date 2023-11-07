@@ -6,33 +6,14 @@ on:
       - main
 
 jobs:
-  deploy:
+  build:
+    name: Build
     runs-on: ubuntu-latest
-
-    env:
-      SSH_USERNAME: ${{ secrets.SSH_USERNAME }}
-      SSH_SERVER: ${{ secrets.SSH_SERVER }}
-
     steps:
-    - name: Checkout del código
-      uses: actions/checkout@v2
-
-    - name: Configurar clave SSH
-      run: |
-        echo "$SSH_PRIVATE_KEY" > key.pem
-        chmod 600 key.pem
-      shell: bash
-
-    - name: Iniciar agente SSH y agregar clave
-      run: |
-        eval `ssh-agent -s`
-        ssh-add key.pem
-      shell: bash
-
-    - name: Verificar agente SSH
-      run: ssh-add -l
-
-    - name: Ejecutar comandos en el servidor
-      run: |
-        ssh -o StrictHostKeyChecking=no $SSH_USERNAME@$SSH_SERVER "touch /home/matijego/gitactions.txt"
-      shell: bash
+    - name: executing remote ssh commands using password
+      uses: appleboy/ssh-action@v1.0.0
+      with:
+        host: ${{ secrets.SSH_SERVER }}
+        username: ${{ secrets.SSH_USERNAME }}
+        password: ${{ secrets.SSH_PASSWORD }}
+        script: touch /home/matijego/gitactions.txt
