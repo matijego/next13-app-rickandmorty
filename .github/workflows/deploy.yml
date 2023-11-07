@@ -23,8 +23,9 @@ jobs:
         chmod 600 key.pem
       shell: bash
 
-    - name: Agregar clave SSH al agente
+    - name: Iniciar agente SSH y agregar clave
       run: |
+        eval `ssh-agent -s`
         ssh-add key.pem
       shell: bash
 
