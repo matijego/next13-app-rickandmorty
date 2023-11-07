@@ -81,7 +81,7 @@ export function AllCharacters() {
     <form onSubmit={findCharacter} className="flex justify-content-center w-full mt-3 fadeinup">
         <span className="p-input-icon-left w-8">
             <i className="pi pi-search" />
-            <InputText name="nombre" onChange={handleSearch} className='w-full p-inputtext-lg' placeholder="Ingresa un nombre..." />
+            <InputText name="nombre" onChange={handleSearch} className='w-full p-inputtext-lg' placeholder="Busca por nombre..." />
         </span>
     </form>
 
