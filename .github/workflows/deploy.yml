@@ -19,3 +19,4 @@ jobs:
         script: |
           cd /home/matijego/github/next13-app-rickandmorty/
           git pull
+          docker-compose -f dockerfiles/docker-compose-prod.yml up -d --build
