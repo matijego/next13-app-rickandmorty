@@ -1,4 +1,4 @@
-name: SSH Login
+name: Despliegue en el servidor
 
 on:
   push:
@@ -6,22 +6,26 @@ on:
       - main
 
 jobs:
-  ssh-login:
+  deploy:
     runs-on: ubuntu-latest
 
-    steps:
-      - name: Checkout repository
-        uses: cross-the-world/ssh-pipeline@master
+    env:
+      SSH_USERNAME: ${{ secrets.SSH_USERNAME }}
+      SSH_SERVER: ${{ secrets.SSH_SERVER }}
 
-      - name: ssh pipelines
-        uses: cross-the-world/ssh-pipeline@master
-        env:
-          WELCOME: "ssh pipeline"
-        with:
-          host: 1
-          user: 1
-          pass: 1
-            
-      - name: comandos
-        run:
-          touch example.txt
+    steps:
+    - name: Checkout del código
+      uses: actions/checkout@v2
+
+    - name: Iniciar agente SSH
+      run: |
+        echo "$SSH_PRIVATE_KEY" > key.pem
+        chmod 600 key.pem
+        ssh-agent -a $SSH_AUTH_SOCK > /dev/null
+        ssh-add key.pem
+        ssh-add -l
+
+    - name: Ejecutar comandos en el servidor
+      run: |
+        ssh -o StrictHostKeyChecking=no -A $SSH_USERNAME@$SSH_SERVER "touch gitactions.txt"
+        ssh -o StrictHostKeyChecking=no -A $SSH_USERNAME@$SSH_SERVER "touch gitactions2.txt"
