@@ -16,6 +16,6 @@ jobs:
         host: ${{ secrets.SSH_SERVER }}
         username: ${{ secrets.SSH_USERNAME }}
         password: ${{ secrets.SSH_PASSWORD }}
-        script:
+        script: |
           cd /home/matijego/github/next13-app-rickandmorty/
           git pull
