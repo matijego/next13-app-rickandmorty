@@ -12,20 +12,28 @@ jobs:
     env:
       SSH_USERNAME: ${{ secrets.SSH_USERNAME }}
       SSH_SERVER: ${{ secrets.SSH_SERVER }}
+      SSH_AUTH_SOCK: ${{ runner.ssh_auth_sock }}
 
     steps:
     - name: Checkout del código
       uses: actions/checkout@v2
 
-    - name: Iniciar agente SSH
+    - name: Configurar clave SSH
       run: |
         echo "$SSH_PRIVATE_KEY" > key.pem
         chmod 600 key.pem
-        ssh-agent -a $SSH_AUTH_SOCK > /dev/null
+      shell: bash
+
+    - name: Iniciar agente SSH
+      run: |
+        eval `ssh-agent -s`
         ssh-add key.pem
-        ssh-add -l
+      shell: bash
+
+    - name: Verificar agent SSH
+      run: ssh-add -l
 
     - name: Ejecutar comandos en el servidor
       run: |
-        ssh -o StrictHostKeyChecking=no -A $SSH_USERNAME@$SSH_SERVER "touch gitactions.txt"
-        ssh -o StrictHostKeyChecking=no -A $SSH_USERNAME@$SSH_SERVER "touch gitactions2.txt"
+        ssh -o StrictHostKeyChecking=no -A $SSH_USERNAME@$SSH_SERVER "touch /home/matijego/gitactions.txt"
+      shell: bash
