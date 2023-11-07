@@ -12,7 +12,6 @@ jobs:
     env:
       SSH_USERNAME: ${{ secrets.SSH_USERNAME }}
       SSH_SERVER: ${{ secrets.SSH_SERVER }}
-      SSH_AUTH_SOCK: ${{ runner.ssh_auth_sock }}
 
     steps:
     - name: Checkout del código
@@ -24,16 +23,16 @@ jobs:
         chmod 600 key.pem
       shell: bash
 
-    - name: Iniciar agente SSH
+    - name: Iniciar agente SSH y agregar clave
       run: |
-        eval `ssh-agent -s`
+        eval "$(ssh-agent -s)"
         ssh-add key.pem
       shell: bash
 
-    - name: Verificar agent SSH
+    - name: Verificar agente SSH
       run: ssh-add -l
 
     - name: Ejecutar comandos en el servidor
       run: |
-        ssh -o StrictHostKeyChecking=no -A $SSH_USERNAME@$SSH_SERVER "touch /home/matijego/gitactions.txt"
+        ssh -o StrictHostKeyChecking=no $SSH_USERNAME@$SSH_SERVER "touch /home/matijego/gitactions.txt"
       shell: bash
